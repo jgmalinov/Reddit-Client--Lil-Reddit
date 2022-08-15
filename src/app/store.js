@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import SearchBarReducer from '../features/SearchBar/SearchBarSlice';
+import MainReducer from '../features/Main/MainSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    searchBar: SearchBarReducer,
+    Main: MainReducer
   },
 });

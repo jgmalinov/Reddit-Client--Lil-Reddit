@@ -1,13 +1,101 @@
+html {
+  background-color: aliceblue;
+}
+
 .App {
-  text-align: center;
+  display: grid;
+  justify-content: center;
+  
+}
+
+#searchbar {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#searchbar input {
+  width: 350px;
+  height: 30px;
+  border-radius: 5px;
+  background-color: white;
+  text-align: left;
+  font-size: 20px;
+}
+
+#searchbar button {
+  background-color: transparent;
+  margin-left: 10px;
+  border: 0px;
+}
+
+#searchbar button i {
+  font-size: 35px;
+}
+
+#searchbar button i:hover {
+  cursor: pointer;
 }
 
 img {
-  max-width: 90%;
+  max-width: 95%;
 }
 
-#post {
-  width: 60%;
+#main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.post {
+  display: grid;
+  border-radius: 6px;
+  box-shadow: 3px 3px 3px black;
+  margin: 20px 0px;
+  padding: 0px 10px 22.178px 10px;
+  background-color: white;
+}
+
+.info {
+  justify-self: center;
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  width: 95%;
+}
+
+.visual-content {
+  display: flex;
+  justify-content: center;
+}
+
+.statistics {
+  display: flex;
+  justify-content: center;
+  width: 95%;
+  justify-self: center;
+  margin-top: 15px;
 }
 
 
+#centerstats {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+.fa-regular.fa-thumbs-down {
+  color: red;
+  font-size: 20px;
+  transform: scaleX(-1);
+  margin: 0px 6px 0px 4px;
+}
+
+.fa-regular.fa-thumbs-up {
+  color: rgb(25, 188, 25);
+  font-size: 20px;
+  margin: 0px 6px 0px 4px;
+}

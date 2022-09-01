@@ -5,16 +5,22 @@ export  function postsConverter(posts) {
             let jsxPost;
             if (isImage(currentPost.url)) {
                 jsxPost = (
-                    <div id={post} style={{width:'640px'}}>
+                    <div className='post' id={post} style={{width:'640px'}}>
                         <section className="info">
-                            <h5>/{currentPost.subreddit}, Author: {currentPost.author}</h5>
+                            <h5>/{currentPost.subreddit}, Posted by: {currentPost.author}</h5>
                             <h3>{currentPost.title}</h3>
                         </section>
                         <section className="visual-content">
                             {<img src={currentPost.url} alt='content visualization'></img>}
                         </section>
                         <section className="statistics">
-                            <a>{}</a>
+                            <div id="centerstats">
+                                <a>{posts[post].numComments} comments</a>
+                                <div className="thumbs">
+                                <a>{posts[post].ups}<i className="fa-regular fa-thumbs-up"></i></a>
+                                <a>{posts[post].downs}<i className="fa-regular fa-thumbs-down"></i></a>
+                                </div>
+                            </div>
                         </section>
                     </div>
                 );

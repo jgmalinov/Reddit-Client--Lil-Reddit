@@ -62,8 +62,8 @@ export default function SearchBar(args) {
     } 
 
     return (
-        <form onSubmit={Search}>
-            <input type='text'></input>
+        <form id='searchbar' onSubmit={Search}>
+            <input type='text' placeholder='Search'></input>
             <button><i className="fa-brands fa-searchengin"></i></button>
         </form>
     )

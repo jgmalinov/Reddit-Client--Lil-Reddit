@@ -24,6 +24,10 @@ export  function postsConverter(posts) {
                                 </div>
                             </div>
                         </section>
+                        <section className="comments">
+                            {currentPost.commentsExpanded ? commentsExpander(currentPost) : <h3>No Comments</h3>}
+                        </section>
+                        
                     </div>
                 );
                 nonIframePosts.push([jsxPost, currentPostTime]);
@@ -56,6 +60,7 @@ export async function commentsExtractor(post) {
     const url = `https://www.reddit.com/r/${post.subreddit}/comments/${post.id}.json`
     const response = await fetch(url);
     const responseJS = response.json();
+    console.log(responseJS);
     return responseJS;
 }
 
@@ -72,4 +77,26 @@ function dateConverter(dateSeconds) {
                                     : [Math.round(hoursPassed), 'hour']) : [Math.round(daysPassed), 'day']) : [Math.round(monthsPassed), 'month']) : [Math.round(yearsPassed), 'year'];
 
     return timePassed[0] < 1 ? `${timePassed[0]} ${timePassed[1]} ago` : `${timePassed[0]} ${timePassed[1]}s ago`
+}
+
+function commentsExpander(post) {
+    const comments = post.comments;
+    const jsxComments = [];
+    for (let comment in comments) {
+        const jsxComment = (
+            <div className="comment">
+                <span>{comments[comment].author} {dateConverter(comments[comment].created)}</span>
+                <div className="commentBody">{comments[comment].body}</div>
+                <section className="statistics">
+                    {comments[comment].replies ? <a>{comments[comment].replies.data.children.length} replies</a> : <p>0 replies</p>}
+                    {comments[comment].score >= 0 ? <a>{comments[comment].score}<i className="fa-regular fa-thumbs-up"></i></a> : <a>{comments[comment].score}<i className="fa-regular fa-thumbs-down"></i></a>} 
+                </section>
+            </div>
+        )
+        
+        jsxComments.push({created: comments[comment].created, comment: jsxComment});
+    }
+
+    const jsxCommentsSorted = (jsxComments.sort((a, b) => a.created > b.created ? -1 : 1)).map(element => element.comment);
+    return jsxCommentsSorted;
 }

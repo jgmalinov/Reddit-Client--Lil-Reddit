@@ -27,7 +27,6 @@ export default function SearchBar(args) {
 
         dispatch(clearPosts());
         resultsArray.forEach(result => {
-            console.log(result);
             const neededData = {
                 id: result.data.id,
                 ups: result.data.ups,
@@ -39,7 +38,8 @@ export default function SearchBar(args) {
                 subreddit: result.data.subreddit,
                 created: result.data.created_utc,
                 preview: result.data.preview ? (result.data.preview.images ? result.data.preview.images[0].source.url : undefined) : undefined,
-                numComments: result.data.num_comments
+                numComments: result.data.num_comments,
+                commentsExpanded: true
             };
             dispatch(addPost(neededData));
             commentsExtractor(neededData)
@@ -53,7 +53,9 @@ export default function SearchBar(args) {
                         author: comment.data.author,
                         replies: comment.data.replies,
                         ups: comment.data.ups,
-                        downs: comment.data.downs
+                        downs: comment.data.downs,
+                        score: comment.data.score,
+                        created: comment.data.created_utc
                     }
                     index += 1;
                 })

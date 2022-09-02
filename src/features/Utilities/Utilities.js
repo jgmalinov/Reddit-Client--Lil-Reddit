@@ -1,13 +1,15 @@
 export  function postsConverter(posts) {
-    const jsxPosts = [];
+    const iframePosts = [];
+    const nonIframePosts = []; 
     for(let post in posts) {
         const currentPost = posts[post];
-            let jsxPost;
+        const currentPostTime = currentPost.created;
+        let jsxPost;
             if (isImage(currentPost.url)) {
                 jsxPost = (
                     <div className='post' id={post} style={{width:'640px'}}>
                         <section className="info">
-                            <h5>/{currentPost.subreddit}, Posted by: {currentPost.author}</h5>
+                            <span>/{currentPost.subreddit}, Posted by: {currentPost.author} {dateConverter(Number(currentPostTime))}</span>
                             <h3>{currentPost.title}</h3>
                         </section>
                         <section className="visual-content">
@@ -24,15 +26,15 @@ export  function postsConverter(posts) {
                         </section>
                     </div>
                 );
+                nonIframePosts.push([jsxPost, currentPostTime]);
             } else {
                 jsxPost = iFrameEmbedder(currentPost);
+                iframePosts.push([jsxPost, currentPostTime]);
             }
-            jsxPosts.push(jsxPost);
         }
-
-    const iframePosts = jsxPosts.filter(post => post.type === 'iframe');
-    const nonIframePosts = jsxPosts.filter(post => post.type !== 'iframe');
-    const jsxPostsOrdered = nonIframePosts.concat(iframePosts);
+    const iframePostsOrdered = (iframePosts.sort((a, b) => a[1] > b[1] ? -1 : 1)).map(a => a[0]);
+    const nonIframePostsOrdered = (nonIframePosts.sort((a, b) => a[1] > b[1] ? -1 : 1)).map(a => a[0]);
+    const jsxPostsOrdered = nonIframePostsOrdered.concat(iframePostsOrdered);
     return jsxPostsOrdered;
 }
 
@@ -57,3 +59,17 @@ export async function commentsExtractor(post) {
     return responseJS;
 }
 
+
+function dateConverter(dateSeconds) {
+    const nowSeconds  = Date.now() / 1000;
+    const secondsPassed = nowSeconds - dateSeconds;
+    const minutesPassed = secondsPassed / 60;
+    const hoursPassed = minutesPassed / 60;
+    const daysPassed = hoursPassed / 24;
+    const monthsPassed = daysPassed / 30;
+    const yearsPassed = monthsPassed / 12;
+    const timePassed =  yearsPassed < 1 ? (monthsPassed < 1 ? (daysPassed < 1 ? (hoursPassed < 1 ? (minutesPassed < 1 ? [Math.round(secondsPassed), 'second'] : [Math.round(minutesPassed), 'minute'])
+                                    : [Math.round(hoursPassed), 'hour']) : [Math.round(daysPassed), 'day']) : [Math.round(monthsPassed), 'month']) : [Math.round(yearsPassed), 'year'];
+
+    return timePassed[0] < 1 ? `${timePassed[0]} ${timePassed[1]} ago` : `${timePassed[0]} ${timePassed[1]}s ago`
+}

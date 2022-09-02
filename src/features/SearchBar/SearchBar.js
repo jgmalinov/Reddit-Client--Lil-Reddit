@@ -17,6 +17,7 @@ export default function SearchBar(args) {
         const userInput = e.target.querySelector('input[type="text"]').value
         const response = await fetch(`https://www.reddit.com/search.json?q=${userInput}`, {headers: {'Cookie': 'SameSite=None; Secure' }});
         const resultsJson = await response.json();
+        console.log(resultsJson);
         
         dispatch(updateBeforeAndAfter({before: resultsJson.data.before, after: resultsJson.data.after}));
         if (firstCall) {
@@ -36,6 +37,7 @@ export default function SearchBar(args) {
                 author: result.data.author,
                 thumbnail: result.data.thumbnail,
                 subreddit: result.data.subreddit,
+                created: result.data.created_utc,
                 preview: result.data.preview ? (result.data.preview.images ? result.data.preview.images[0].source.url : undefined) : undefined,
                 numComments: result.data.num_comments
             };

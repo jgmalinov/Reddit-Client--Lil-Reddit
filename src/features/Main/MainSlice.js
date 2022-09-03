@@ -18,11 +18,15 @@ const Main = createSlice({
         addComments(state, action) {
             const id = action.payload.id;
             state.posts[id].comments = action.payload.comments;
+        },
+        expandComments(state, action) {
+            const id = action.payload.id;
+            state.posts[id].commentsExpanded ? state.posts[id].commentsExpanded = false : state.posts[id].commentsExpanded = true;
         }
     }
 })
 
 
 export const postSelector = (state) => state.Main.posts;
-export const { addPost, clearPosts, addComments} = Main.actions;
+export const { addPost, clearPosts, addComments, expandComments} = Main.actions;
 export default Main.reducer;

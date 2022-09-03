@@ -1,4 +1,15 @@
-export  function postsConverter(posts) {
+import { useDispatch } from "react-redux";
+import { expandComments } from "../Main/MainSlice";
+
+
+export  function PostsConverter(args) {
+    const posts = args.posts;
+    const dispatch = useDispatch();
+
+    function switchCommentsExpanded(event) {
+        const id = event.target.id;
+        dispatch(expandComments({id: id}));
+    }
     const iframePosts = [];
     const nonIframePosts = []; 
     for(let post in posts) {
@@ -17,7 +28,7 @@ export  function postsConverter(posts) {
                         </section>
                         <section className="statistics">
                             <div id="centerstats">
-                                <a>{posts[post].numComments} comments</a>
+                                <a id={currentPost.id} onClick={switchCommentsExpanded}>{posts[post].numComments} comments</a>
                                 <div className="thumbs">
                                 <a>{posts[post].ups}<i className="fa-regular fa-thumbs-up"></i></a>
                                 <a>{posts[post].downs}<i className="fa-regular fa-thumbs-down"></i></a>
@@ -39,7 +50,11 @@ export  function postsConverter(posts) {
     const iframePostsOrdered = (iframePosts.sort((a, b) => a[1] > b[1] ? -1 : 1)).map(a => a[0]);
     const nonIframePostsOrdered = (nonIframePosts.sort((a, b) => a[1] > b[1] ? -1 : 1)).map(a => a[0]);
     const jsxPostsOrdered = nonIframePostsOrdered.concat(iframePostsOrdered);
-    return jsxPostsOrdered;
+    return (
+        <div id="main">
+            {jsxPostsOrdered}
+        </div>
+    );
 }
 
 function isImage(url) {

@@ -39,7 +39,7 @@ export default function SearchBar(args) {
                 created: result.data.created_utc,
                 preview: result.data.preview ? (result.data.preview.images ? result.data.preview.images[0].source.url : undefined) : undefined,
                 numComments: result.data.num_comments,
-                commentsExpanded: true
+                commentsExpanded: false
             };
             dispatch(addPost(neededData));
             commentsExtractor(neededData)

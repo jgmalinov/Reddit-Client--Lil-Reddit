@@ -5,7 +5,9 @@ import { PostsConverter } from "../Utilities/Utilities";
 export function Main(args) {
     const posts = useSelector(postSelector);
     return (
-        <PostsConverter posts={posts}/>
+        <div>
+            <PostsConverter posts={posts}/>
+        </div>
     )
 }
 

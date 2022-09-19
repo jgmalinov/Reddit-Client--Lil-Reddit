@@ -5,16 +5,37 @@ const SearchBarSlice = createSlice({
     initialState: {
         after: '',
         before: '',
-        firstCall: true, 
+        beforeList: [],
+        lastSearch: '',
+        firstCall: true,
+        sortCriteria: 'relevance'
     },
     reducers: {
         updateBeforeAndAfter: (state, action) => {
-            state.after = action.payload.after;
-            state.before = action.payload.before;
-            
+            const scenario = action.payload.scenario;
+            switch (scenario) {
+                case 'newSearch' || 'sort':
+                    state.before = null;
+                    state.after = action.payload.after;
+                    break
+                case 'next':
+                    state.beforeList.push(state.before);
+                    state.before = state.after;
+                    state.after = action.payload.after;
+                    break
+                default:
+                    state.after = state.before;
+                    state.before = state.beforeList.pop();
+            };
         },
         toggleFirstCall: (state, action) => {
             state.firstCall = false;
+        },
+        setLastSearch: (state, action) => {
+            state.lastSearch = action.payload;
+        },
+        setSortCriteria: (state, action) => {
+            state.sortCriteria = action.payload;
         }
     }
 })
@@ -22,9 +43,8 @@ const SearchBarSlice = createSlice({
 export const selectAfter = (state) => state.searchBar.after;
 export const selectBefore = (state) => state.searchBar.before;
 export const selectFirstCall = (state) => state.searchBar.firstCall;
+export const selectLastSearch = (state) => state.searchBar.lastSearch;
+export const selectSortCriteria = (state) => state.searchBar.sortCriteria;
 
-export const { updateBeforeAndAfter, toggleFirstCall } = SearchBarSlice.actions;
+export const { updateBeforeAndAfter, toggleFirstCall, setLastSearch, setSortCriteria } = SearchBarSlice.actions;
 export default SearchBarSlice.reducer;
-
-const instance = updateBeforeAndAfter({hleb: 2, meso: 14});
-console.log(instance);

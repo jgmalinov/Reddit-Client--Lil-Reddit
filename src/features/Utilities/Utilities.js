@@ -20,7 +20,7 @@ export  function PostsConverter(args) {
                 jsxPost = (
                     <div className='post' id={post} style={{width:'640px'}}>
                         <section className="info">
-                            <span>/{currentPost.subreddit}, Posted by: {currentPost.author} {dateConverter(Number(currentPostTime))}</span>
+                            <span><a href={`https://www.reddit.com/r/${currentPost.subreddit}`} target='_blank' rel="noreferrer">/{currentPost.subreddit}</a>, Posted by: {currentPost.author} {dateConverter(Number(currentPostTime))}</span>
                             <h3>{currentPost.title}</h3>
                         </section>
                         <section className="visual-content">
@@ -36,7 +36,7 @@ export  function PostsConverter(args) {
                             </div>
                         </section>
                         <section className="comments">
-                            {currentPost.commentsExpanded ? commentsExpander(currentPost) : <h3>No Comments</h3>}
+                            {currentPost.commentsExpanded ? commentsExpander(currentPost) : <h3></h3>}
                         </section>
                         
                     </div>
@@ -75,7 +75,6 @@ export async function commentsExtractor(post) {
     const url = `https://www.reddit.com/r/${post.subreddit}/comments/${post.id}.json`
     const response = await fetch(url);
     const responseJS = response.json();
-    console.log(responseJS);
     return responseJS;
 }
 

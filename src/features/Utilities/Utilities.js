@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { expandComments } from "../Main/MainSlice";
-
+import { addPost, addComments, clearPosts} from '../Main/MainSlice';
 
 export  function PostsConverter(args) {
     const posts = args.posts;
@@ -55,6 +55,46 @@ export  function PostsConverter(args) {
             {jsxPostsOrdered}
         </div>
     );
+};
+
+export function postCreator(dispatch, resultsArray) {
+    dispatch(clearPosts());
+    resultsArray.forEach(result => {
+        const neededData = {
+            id: result.data.id,
+            ups: result.data.ups,
+            downs: result.data.downs,
+            title: result.data.title,
+            url: result.data.url,
+            author: result.data.author,
+            thumbnail: result.data.thumbnail,
+            subreddit: result.data.subreddit,
+            created: result.data.created_utc,
+            preview: result.data.preview ? (result.data.preview.images ? result.data.preview.images[0].source.url : undefined) : undefined,
+            numComments: result.data.num_comments,
+            commentsExpanded: false
+        };
+        dispatch(addPost(neededData));
+        commentsExtractor(neededData)
+        .then((response) => {
+            const commentsRAW = response[1].data.children;
+            let commentsFiltered = [];
+            let index = 0;
+            commentsRAW.forEach(comment => {
+                commentsFiltered[index] = {
+                    body: comment.data.body,
+                    author: comment.data.author,
+                    replies: comment.data.replies,
+                    ups: comment.data.ups,
+                    downs: comment.data.downs,
+                    score: comment.data.score,
+                    created: comment.data.created_utc
+                }
+                index += 1;
+            })
+            dispatch(addComments({id: result.data.id, comments: commentsFiltered}));
+        }); 
+    });
 }
 
 function isImage(url) {

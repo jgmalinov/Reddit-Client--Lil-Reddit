@@ -1,6 +1,48 @@
 import { useDispatch } from "react-redux";
 import { expandComments } from "../Main/MainSlice";
 import { addPost, addComments, clearPosts} from '../Main/MainSlice';
+import { toggleFirstCall, updateBeforeAndAfter, setLastSearch } from "../SearchBar/SearchBarSlice";
+
+export async function Search(e, before, after, lastSearch, firstCall, sortCriteria, dispatch) {
+    e.preventDefault();
+    let response;
+    let scenario;
+    switch (e.currentTarget) {
+        case document.getElementById('searchbar'):
+            scenario = 'newSearch';
+            const userInput = e.target.querySelector('input[type="text"]').value;
+            dispatch(setLastSearch(userInput));
+            response = await fetch(`https://www.reddit.com/search.json?q=${userInput}&sort=${sortCriteria}`, {headers: {'Cookie': 'SameSite=None; Secure' }});
+            break;
+        case document.getElementById('next'):
+            scenario = 'next';
+            response = await fetch(`https://www.reddit.com/search.json?q=${lastSearch}&sort=${sortCriteria}&after=${after}&limit=20`, {headers: {'Cookie': 'SameSite=None; Secure' }});
+            break;
+        case document.getElementById('previous'):
+            scenario = 'previous';
+            response = await fetch(`https://www.reddit.com/search.json?q=${lastSearch}&sort=${sortCriteria}&before=${before}&limit=20`, {headers: {'Cookie': 'SameSite=None; Secure' }});
+            break;
+        case document.getElementById('sort'):
+            scenario = 'newSearch';
+            response = await fetch(`https://www.reddit.com/search.json?q=${lastSearch}&sort=${e.target.value}&limit=20`, {headers: {'Cookie': 'SameSite=None; Secure' }});
+            break
+        default:
+            scenario = 'newSearch';
+            const subreddit = e.currentTarget;
+            response = await fetch(`https://www.reddit.com/r/${subreddit}/search.json?sort=${sortCriteria}&limit=20`, {headers: {'Cookie': 'SameSite=None; Secure' }});
+
+    };
+    
+    const resultsJson = await response.json();
+    const resultsArray = resultsJson.data.children;
+
+    dispatch(updateBeforeAndAfter({scenario, after: resultsJson.data.after}));
+    if (firstCall) {
+        dispatch(toggleFirstCall());
+    };
+
+    postCreator(dispatch, resultsArray);
+};
 
 export  function PostsConverter(args) {
     const posts = args.posts;

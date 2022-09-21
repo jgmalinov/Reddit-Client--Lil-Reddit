@@ -105,3 +105,32 @@ img {
   font-size: 20px;
   margin: 0px 6px 0px 4px;
 }
+
+.subreddit {
+  border-radius: 50%;
+  background-color: #33a8ff;
+  color: white;
+  width: 150px;
+  height: 150px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 50px 15px;
+}
+
+.subreddit:hover {
+  cursor: pointer;
+}
+
+.memberCount {
+  text-align: center;
+  font-size: 16px;
+  margin: 5px 0px;
+}
+
+.subreddit h3,
+.subreddit h4,
+.subreddit h5 {
+  margin: 5px;
+}

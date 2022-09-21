@@ -2,11 +2,14 @@ import { useDispatch } from "react-redux";
 import { expandComments } from "../Main/MainSlice";
 import { addPost, addComments, clearPosts} from '../Main/MainSlice';
 import { toggleFirstCall, updateBeforeAndAfter, setLastSearch } from "../SearchBar/SearchBarSlice";
+import { selectSelected } from "../Suggestions/suggestionsSlice";
 
-export async function Search(e, before, after, lastSearch, firstCall, sortCriteria, dispatch) {
+
+export async function Search(e, before, after, lastSearch, firstCall, sortCriteria, dispatch, selectedSubreddit='') {
     e.preventDefault();
     let response;
     let scenario;
+    
     switch (e.currentTarget) {
         case document.getElementById('searchbar'):
             scenario = 'newSearch';
@@ -28,8 +31,8 @@ export async function Search(e, before, after, lastSearch, firstCall, sortCriter
             break
         default:
             scenario = 'newSearch';
-            const subreddit = e.currentTarget;
-            response = await fetch(`https://www.reddit.com/r/${subreddit}/search.json?sort=${sortCriteria}&limit=20`, {headers: {'Cookie': 'SameSite=None; Secure' }});
+            const subreddit = e.currentTarget.id;
+            response = await fetch(`https://www.reddit.com/r/${subreddit}/.json?sort=${sortCriteria}&limit=20`, {headers: {'Cookie': 'SameSite=None; Secure' }});
 
     };
     

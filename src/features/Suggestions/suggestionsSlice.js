@@ -37,19 +37,24 @@ const suggestionsSlice = createSlice({
             top: 'top',
             new: 'new',
             comments: 'comments'
-        }
+        },
+        selected: ''
     },
     reducers: {
         setMembers: (state, action) => {
             const subreddit = action.payload.subreddit;
             const members = action.payload.members;
             state.subreddits[subreddit].members = members;
+        },
+        setSelected: (state, action) => {
+            const selectedSubreddit = action.payload;
+            state.selected = selectedSubreddit;
         }
     }
 });
 
 
-export const { setMembers } = suggestionsSlice.actions;
+export const { setMembers, setSelected } = suggestionsSlice.actions;
 export const selectSubreddits = (state) => state.Suggestions.subreddits;
 export const selectMembers = (state) => {
     const subreddits = state.Suggestions.subreddits;
@@ -58,5 +63,6 @@ export const selectMembers = (state) => {
         members[subreddit] = subreddits[subreddit].members;
     };
     return members;
-}
+};
+export const selectSelected = (state) => state.Suggestions.selected;
 export default suggestionsSlice.reducer;

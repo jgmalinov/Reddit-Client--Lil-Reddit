@@ -1,8 +1,9 @@
-import { updateBeforeAndAfter, toggleFirstCall, setLastSearch, setSortCriteria, selectAfter, selectBefore, selectFirstCall, selectLastSearch, selectSortCriteria } from './SearchBarSlice';
+import { setSortCriteria, selectAfter, selectBefore, selectFirstCall, selectLastSearch, selectSortCriteria } from './SearchBarSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { postSelector } from '../Main/MainSlice';
-import { postCreator, Search } from '../Utilities/Utilities';
-
+import { Search } from '../Utilities/Utilities';
+import Suggestions from "../Suggestions/suggestions";
+import { selectSelected } from '../Suggestions/suggestionsSlice';
 
 export default function SearchBar(args) {
     const dispatch = useDispatch();
@@ -12,6 +13,7 @@ export default function SearchBar(args) {
     const firstCall = useSelector(selectFirstCall);
     const lastSearch = useSelector(selectLastSearch);
     const sortCriteria = useSelector(selectSortCriteria);
+    const selectedSubreddit = useSelector(selectSelected);
 
     function SearchWrapper(e) {
         Search(e, before, after, lastSearch, firstCall, sortCriteria, dispatch);
@@ -19,7 +21,7 @@ export default function SearchBar(args) {
 
     function sortOut(e) {
         dispatch(setSortCriteria(e.target.value));
-        Search(e, before, after, lastSearch, firstCall, sortCriteria, dispatch);
+        Search(e, before, after, lastSearch, firstCall, sortCriteria, dispatch, selectedSubreddit);
     }
 
     return (
@@ -38,8 +40,9 @@ export default function SearchBar(args) {
             </form>
             <button id='previous' disabled={!before} onClick={SearchWrapper}>Previous</button>
             <button id='next'disabled={(!after && before) || Object.keys(posts).length === 0} onClick={SearchWrapper}>Next</button>
+            <div id='suggestions'>
+                <Suggestions before={before} after={after} firstCall={firstCall} lastSearch={lastSearch} sortCriteria={sortCriteria}/>
+            </div>
         </div>
     )
 }
-
-//  : await fetch(`https://www.reddit.com/search.json?q=${userInput}&after=${after}&count=20`);

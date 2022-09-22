@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setMembers, setSelected, selectSubreddits, selectMembers, selectSelected } from "./suggestionsSlice";
-import { setSortCriteria, selectAfter, selectBefore, selectFirstCall, selectLastSearch, selectSortCriteria } from '../SearchBar/SearchBarSlice';
+import {setLastSearch, setSortCriteria, selectAfter, selectBefore, selectFirstCall, selectLastSearch, selectSortCriteria } from '../SearchBar/SearchBarSlice';
 import { postCreator, Search } from "../Utilities/Utilities";
 
 export default function Suggestions(args) {
@@ -27,7 +27,10 @@ export default function Suggestions(args) {
 
     async function subredditSearchWrapper(e) {
         dispatch(setSelected(e.currentTarget.id));
-        Search(e, args.before, args.after, args.lastSearch, args.firstCall, args.sortCriteria, dispatch, e.currentTarget.id);
+        dispatch(setLastSearch(''));
+        dispatch(setSortCriteria('hot'));
+        let sortCriteria = 'hot';
+        Search(e, args.before, args.after, '', args.firstCall, sortCriteria, dispatch, e.currentTarget.id);
     }
 
     return (

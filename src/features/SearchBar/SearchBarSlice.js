@@ -8,7 +8,7 @@ const SearchBarSlice = createSlice({
         beforeList: [],
         lastSearch: '',
         firstCall: true,
-        sortCriteria: 'relevance'
+        sortCriteria: 'hot'
     },
     reducers: {
         updateBeforeAndAfter: (state, action) => {

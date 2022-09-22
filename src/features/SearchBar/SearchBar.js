@@ -1,9 +1,9 @@
-import { setSortCriteria, selectAfter, selectBefore, selectFirstCall, selectLastSearch, selectSortCriteria } from './SearchBarSlice';
+import { setSortCriteria, setLastSearch, selectAfter, selectBefore, selectFirstCall, selectLastSearch, selectSortCriteria } from './SearchBarSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { postSelector } from '../Main/MainSlice';
 import { Search } from '../Utilities/Utilities';
 import Suggestions from "../Suggestions/suggestions";
-import { selectSelected } from '../Suggestions/suggestionsSlice';
+import { selectSelected, setSelected } from '../Suggestions/suggestionsSlice';
 
 export default function SearchBar(args) {
     const dispatch = useDispatch();
@@ -11,17 +11,45 @@ export default function SearchBar(args) {
     const after = useSelector(selectAfter);
     const posts = useSelector(postSelector);
     const firstCall = useSelector(selectFirstCall);
-    const lastSearch = useSelector(selectLastSearch);
-    const sortCriteria = useSelector(selectSortCriteria);
-    const selectedSubreddit = useSelector(selectSelected);
+    let lastSearch = useSelector(selectLastSearch);
+    let sortCriteria = useSelector(selectSortCriteria);
+    let selectedSubreddit = useSelector(selectSelected);
 
     function SearchWrapper(e) {
-        Search(e, before, after, lastSearch, firstCall, sortCriteria, dispatch);
+        if (e.target === document.getElementById('searchbar')) {
+            lastSearch = e.target.querySelector('input[type="text"]').value;
+            dispatch(setLastSearch(lastSearch));
+            selectedSubreddit = '';
+            dispatch(setSelected(''));
+            sortCriteria = 'hot';
+            dispatch(setSortCriteria('hot'));
+        }
+        Search(e, before, after, lastSearch, firstCall, sortCriteria, dispatch, selectedSubreddit);
     }
 
     function sortOut(e) {
-        dispatch(setSortCriteria(e.target.value));
+        sortCriteria = e.target.value;
+        dispatch(setSortCriteria(sortCriteria));
         Search(e, before, after, lastSearch, firstCall, sortCriteria, dispatch, selectedSubreddit);
+    }
+
+    function sortType () {
+        if (!selectedSubreddit) {
+            return <select name='sort' id='sort' value={sortCriteria} onChange={sortOut}>
+                        <option value='relevance'>Relevance</option>
+                        <option value='hot'>Hot</option>
+                        <option value='top'>Top</option>
+                        <option value='new'>New</option>
+                        <option value='comments'>Comments</option>
+                    </select>
+        } else {
+            return <select name='sort' id='sort' value={sortCriteria} onChange={sortOut}>
+                        <option value='hot'>Hot</option>
+                        <option value='rising'>Rising</option>
+                        <option value='top'>Top</option>
+                        <option value='new'>New</option>
+                    </select>
+        }
     }
 
     return (
@@ -30,13 +58,7 @@ export default function SearchBar(args) {
                 <input type='text' placeholder='Search'></input>
                 <button><i className="fa-brands fa-searchengin"></i></button>
                 <label>Sort</label>
-                <select name='sort' id='sort' onChange={sortOut}>
-                    <option value='relevance'>Relevance</option>
-                    <option value='hot'>Hot</option>
-                    <option value='top'>Top</option>
-                    <option value='new'>New</option>
-                    <option value='comments'>Comments</option>
-                </select>
+                {sortType()}
             </form>
             <button id='previous' disabled={!before} onClick={SearchWrapper}>Previous</button>
             <button id='next'disabled={(!after && before) || Object.keys(posts).length === 0} onClick={SearchWrapper}>Next</button>

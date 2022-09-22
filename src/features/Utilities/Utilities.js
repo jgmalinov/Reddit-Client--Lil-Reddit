@@ -9,34 +9,37 @@ export async function Search(e, before, after, lastSearch, firstCall, sortCriter
     e.preventDefault();
     let response;
     let scenario;
+    const baseURL = `https://www.reddit.com/`;
+    const subredditQuery = `r/${selectedSubreddit}/${sortCriteria}/.json`;
+    const searchQuery = `search.json?q=${lastSearch}&sort=${sortCriteria}`;
+    const config = {headers: {'Cookie': 'SameSite=None; Secure' }}
     
+
     switch (e.currentTarget) {
         case document.getElementById('searchbar'):
             scenario = 'newSearch';
-            const userInput = e.target.querySelector('input[type="text"]').value;
-            dispatch(setLastSearch(userInput));
-            response = await fetch(`https://www.reddit.com/search.json?q=${userInput}&sort=${sortCriteria}`, {headers: {'Cookie': 'SameSite=None; Secure' }});
+            response = await fetch(baseURL + searchQuery + `&limit=20`, config);
             break;
         case document.getElementById('next'):
             scenario = 'next';
-            response = await fetch(`https://www.reddit.com/search.json?q=${lastSearch}&sort=${sortCriteria}&after=${after}&limit=20`, {headers: {'Cookie': 'SameSite=None; Secure' }});
+            response = await fetch(baseURL + (selectedSubreddit ? (subredditQuery + `?after=${after}&limit=20`): (searchQuery + `&after=${after}&limit=20`)), config);
             break;
         case document.getElementById('previous'):
             scenario = 'previous';
-            response = await fetch(`https://www.reddit.com/search.json?q=${lastSearch}&sort=${sortCriteria}&before=${before}&limit=20`, {headers: {'Cookie': 'SameSite=None; Secure' }});
+            response = await fetch(baseURL + (selectedSubreddit ? (subredditQuery + `?before=${before}&limit=20`): (searchQuery + `&before=${before}&limit=20`)), config);
             break;
         case document.getElementById('sort'):
             scenario = 'newSearch';
-            response = await fetch(`https://www.reddit.com/search.json?q=${lastSearch}&sort=${e.target.value}&limit=20`, {headers: {'Cookie': 'SameSite=None; Secure' }});
-            break
+            response = await fetch(baseURL + (selectedSubreddit ? (subredditQuery + `?limit=20`) : (searchQuery + `&limit=20`)), config);
+            break;
         default:
             scenario = 'newSearch';
-            const subreddit = e.currentTarget.id;
-            response = await fetch(`https://www.reddit.com/r/${subreddit}/.json?sort=${sortCriteria}&limit=20`, {headers: {'Cookie': 'SameSite=None; Secure' }});
-
+            response = await fetch(baseURL + subredditQuery, config);
+            break;
     };
     
     const resultsJson = await response.json();
+    console.log(resultsJson);
     const resultsArray = resultsJson.data.children;
 
     dispatch(updateBeforeAndAfter({scenario, after: resultsJson.data.after}));

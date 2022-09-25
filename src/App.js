@@ -2,6 +2,7 @@ import React from 'react';
 import SearchBar from '../src/features/SearchBar/SearchBar';
 import { Main } from './features/Main/Main';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 import './App.css';
 
 /*
@@ -22,7 +23,7 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={
-            <div>
+            <div id='content'>
               <SearchBar />
               <Main />
             </div>
@@ -33,5 +34,7 @@ function App() {
     </div>
   );
 }
+
+
 
 export default App;

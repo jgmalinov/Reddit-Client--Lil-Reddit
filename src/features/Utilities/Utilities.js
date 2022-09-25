@@ -66,7 +66,7 @@ export  function PostsConverter(args) {
         let jsxPost;
             if (isImage(currentPost.url)) {
                 jsxPost = (
-                    <div className='post' id={post} style={{width:'640px'}}>
+                    <div className='post' id={post}>
                         <section className="info">
                             <span><a href={`https://www.reddit.com/r/${currentPost.subreddit}`} target='_blank' rel="noreferrer">/{currentPost.subreddit}</a>, Posted by: {currentPost.author} {dateConverter(Number(currentPostTime))}</span>
                             <h3>{currentPost.title}</h3>

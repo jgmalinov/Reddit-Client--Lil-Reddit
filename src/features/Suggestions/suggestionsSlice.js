@@ -9,22 +9,22 @@ const suggestionsSlice = createSlice({
                 baseURL: 'https://www.reddit.com/r/AskReddit/',
                 members: ''
             },
-            Funny: {
+            funny: {
                 name: 'Funny',
                 baseURL: 'https://www.reddit.com/r/funny/',
                 members: ''
             },
-            News: {
+            news: {
                 name: 'News',
                 baseURL: 'https://www.reddit.com/r/news/',
                 members: ''
             },
-            Gaming: {
+            gaming: {
                 name: 'Gaming',
                 baseURL: 'https://www.reddit.com/r/gaming/',
                 members: ''
             },
-            Memes: {
+            memes: {
                 name: '/r/Memes the original since 2008',
                 baseURL: 'https://www.reddit.com/r/memes/',
                 members: ''
@@ -38,7 +38,11 @@ const suggestionsSlice = createSlice({
             new: 'new',
             comments: 'comments'
         },
-        selected: ''
+        selected: '',
+        animationUnits: {
+            index: 0,
+            units: [0, 142.8571, 285.7142, 428.5713, 571.4284]
+        }
     },
     reducers: {
         setMembers: (state, action) => {
@@ -49,12 +53,19 @@ const suggestionsSlice = createSlice({
         setSelected: (state, action) => {
             const selectedSubreddit = action.payload;
             state.selected = selectedSubreddit;
+        },
+        setIndex: (state) => {
+            if (state.animationUnits.index !== 4) {
+                state.animationUnits.index += 1;
+            } else {
+                state.animationUnits.index = 0;
+            }
         }
     }
 });
 
 
-export const { setMembers, setSelected } = suggestionsSlice.actions;
+export const { setMembers, setSelected, setIndex } = suggestionsSlice.actions;
 export const selectSubreddits = (state) => state.Suggestions.subreddits;
 export const selectMembers = (state) => {
     const subreddits = state.Suggestions.subreddits;
@@ -65,4 +76,5 @@ export const selectMembers = (state) => {
     return members;
 };
 export const selectSelected = (state) => state.Suggestions.selected;
+export const selectAnimationUnits = (state) => state.Suggestions.animationUnits;
 export default suggestionsSlice.reducer;

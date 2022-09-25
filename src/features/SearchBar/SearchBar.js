@@ -5,6 +5,7 @@ import { Search } from '../Utilities/Utilities';
 import Suggestions from "../Suggestions/suggestions";
 import { selectSelected, setSelected } from '../Suggestions/suggestionsSlice';
 
+
 export default function SearchBar(args) {
     const dispatch = useDispatch();
     const before = useSelector(selectBefore);
@@ -14,6 +15,7 @@ export default function SearchBar(args) {
     let lastSearch = useSelector(selectLastSearch);
     let sortCriteria = useSelector(selectSortCriteria);
     let selectedSubreddit = useSelector(selectSelected);
+
 
     function SearchWrapper(e) {
         if (e.target === document.getElementById('searchbar')) {
@@ -53,7 +55,7 @@ export default function SearchBar(args) {
     }
 
     return (
-        <div>
+        <div id='navigation'>
             <form id='searchbar' onSubmit={SearchWrapper}>
                 <input type='text' placeholder='Search'></input>
                 <button><i className="fa-brands fa-searchengin"></i></button>
@@ -68,3 +70,5 @@ export default function SearchBar(args) {
         </div>
     )
 }
+
+

@@ -2,6 +2,7 @@ import React from 'react';
 import SearchBar from '../src/features/SearchBar/SearchBar';
 import { Main } from './features/Main/Main';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LoadingScreen from './features/Loading/loadingScreen';
 
 import './App.css';
 
@@ -26,6 +27,7 @@ function App() {
             <div id='content'>
               <SearchBar />
               <Main />
+              <LoadingScreen />
             </div>
           }></Route>
           

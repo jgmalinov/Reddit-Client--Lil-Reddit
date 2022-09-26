@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMembers, setSelected, setIndex, selectSubreddits, selectMembers, selectSelected, selectAnimationUnits } from "./suggestionsSlice";
 import {setLastSearch, setSortCriteria, selectAfter, selectBefore, selectFirstCall, selectLastSearch, selectSortCriteria } from '../SearchBar/SearchBarSlice';
 import { postCreator, Search } from "../Utilities/Utilities";
+import { data } from "../../Animations";
 
 
 export default function Suggestions(args) {
@@ -11,16 +12,11 @@ export default function Suggestions(args) {
     const members = useSelector(selectMembers);
     const selectedSubreddit = useSelector(selectSelected);
     const animationUnits = useSelector(selectAnimationUnits);
-    const data = {
-        AskReddit: ["r/Ask Reddit...", 0],
-        funny: ["r/funny", 142.8571],
-        news: ["r/news", 285.7142],
-        gaming: ["r/gaming", 428.5713],
-        memes: ["r/memes", 571.4284]
-    };
+
 
 
     useEffect(() => {
+        console.log('hleb');
         async function getMembers () {
             for(let subreddit in subreddits) {
                 let url = subreddits[subreddit].baseURL;
@@ -35,19 +31,35 @@ export default function Suggestions(args) {
             getMembers();
         };
 
+        
+        const eventListeners = []
+        
         for (let subreddit in data) {
             const domElement = document.getElementById(subreddit);
             const keyframes = new KeyframeEffect(
                 domElement,
-                [ {}, {transform: "translate(571.4284%)"}, {transform: `translate(571.4284%, ${data[subreddit][1]}%)`} ],
-                { duration: 2000, fill: 'forwards'}
+                [ {transform: `translate(${data[subreddit][1]}%)`}, {transform: "translate(571.4284%)"}, {transform: `translate(571.4284%, ${data[subreddit][1]}%)`} ],
+                { duration: 300, fill: 'backwards', direction: 'reverse'}
             );
         
             const animation = new Animation(keyframes, document.timeline);
             function play(e) {
-                animation.play();
+                if ((20 <= window.scrollY && window.scrollY <= 80) && animation.playState !== 'running') {
+                    animation.reverse();
+                };
+            };
+            
+            eventListeners.push(play);
+        };
+
+        for (let i = 0; i < eventListeners.length; i++) {
+            window.addEventListener('scroll', eventListeners[i])
+        };
+
+        return function cleanup() {
+            for (let i = 0; i < eventListeners.length; i++) {
+                window.removeEventListener('scroll', eventListeners[i])
             }
-            window.addEventListener('scroll', play);
         };
     });
 
@@ -84,5 +96,5 @@ export default function Suggestions(args) {
             <div className='subreddit' id="memes" ref={ref} onClick={subredditSearchWrapper} onDoubleClick={play}><h3>r/memes</h3><h4 className="memberCount">{`${(Number(members.Memes) / 1000000).toFixed(1)}`}m</h4><h5>members</h5></div>
             
             
-
+20 <= window.scrollY && window.scrollY <= 30
 */

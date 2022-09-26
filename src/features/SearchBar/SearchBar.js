@@ -5,7 +5,6 @@ import { Search } from '../Utilities/Utilities';
 import Suggestions from "../Suggestions/suggestions";
 import { selectSelected, setSelected } from '../Suggestions/suggestionsSlice';
 
-
 export default function SearchBar(args) {
     const dispatch = useDispatch();
     const before = useSelector(selectBefore);

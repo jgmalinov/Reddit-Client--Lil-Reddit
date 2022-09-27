@@ -28,5 +28,5 @@ const Main = createSlice({
 
 
 export const postSelector = (state) => state.Main.posts;
-export const { addPost, clearPosts, addComments, expandComments} = Main.actions;
+export const { addPost, clearPosts, addComments, expandComments } = Main.actions;
 export default Main.reducer;

@@ -26,7 +26,7 @@ html {
 
 #content {
   display: flex;
-  justify-content: center;
+  align-items: center;
   flex-direction: column;
 }
 
@@ -74,6 +74,7 @@ img {
 }
 
 #main {
+  margin-top: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -85,7 +86,7 @@ img {
   border-radius: 6px;
   width: 65vw;
   box-shadow: 3px 3px 3px black;
-  margin: 350px 0px;
+  margin: 50px 0px;
   padding: 0px 10px 22.178px 10px;
   background-color: white;
 }
@@ -144,14 +145,14 @@ img {
   border-radius: 50%;
   background-color: #33a8ff;
   color: white;
-  width: 14vw;
-  height: 14vw;
+  width: 10vw;
+  height: 10vw;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   margin: 50px 0px;
-  left: 3vw;
+  left: 16.42858vw;
 }
 
 .subreddit:hover {
@@ -184,4 +185,9 @@ img {
 
 #news {
   transform: translate(571.4284%);
+}
+
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
 }

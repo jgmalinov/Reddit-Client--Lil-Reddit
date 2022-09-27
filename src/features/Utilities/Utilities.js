@@ -202,3 +202,12 @@ function commentsExpander(post) {
     const jsxCommentsSorted = (jsxComments.sort((a, b) => a.created > b.created ? -1 : 1)).map(element => element.comment);
     return jsxCommentsSorted;
 }
+
+export function scrollDisable() {
+    document.body.classList.add("stop-scrolling");
+};
+
+export function scrollEnable() {
+    document.body.classList.remove("stop-scrolling");
+};
+

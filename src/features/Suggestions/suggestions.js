@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setMembers, setSelected, setIndex, selectSubreddits, selectMembers, selectSelected, selectAnimationUnits } from "./suggestionsSlice";
 import {setLastSearch, setSortCriteria, selectAfter, selectBefore, selectFirstCall, selectLastSearch, selectSortCriteria } from '../SearchBar/SearchBarSlice';
-import { postCreator, Search } from "../Utilities/Utilities";
+import { postCreator, Search, addLoading, scrollDisable } from "../Utilities/Utilities";
+import { toggleLoading } from "../Loading/loadingScreenSlice";
 import { data } from "../../Animations";
 
 
@@ -64,6 +65,8 @@ export default function Suggestions(args) {
     });
 
     async function subredditSearchWrapper(e) {
+        scrollDisable();
+        dispatch(toggleLoading(true));
         dispatch(setSelected(e.currentTarget.id));
         dispatch(setLastSearch(''));
         dispatch(setSortCriteria('hot'));

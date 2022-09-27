@@ -1,9 +1,10 @@
 import { setSortCriteria, setLastSearch, selectAfter, selectBefore, selectFirstCall, selectLastSearch, selectSortCriteria } from './SearchBarSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { postSelector } from '../Main/MainSlice';
-import { Search } from '../Utilities/Utilities';
+import { Search, scrollDisable } from '../Utilities/Utilities';
 import Suggestions from "../Suggestions/suggestions";
 import { selectSelected, setSelected } from '../Suggestions/suggestionsSlice';
+import { toggleLoading } from '../Loading/loadingScreenSlice';
 
 export default function SearchBar(args) {
     const dispatch = useDispatch();
@@ -17,6 +18,8 @@ export default function SearchBar(args) {
 
 
     function SearchWrapper(e) {
+        scrollDisable();
+        dispatch(toggleLoading(true));
         if (e.target === document.getElementById('searchbar')) {
             lastSearch = e.target.querySelector('input[type="text"]').value;
             dispatch(setLastSearch(lastSearch));
@@ -29,6 +32,8 @@ export default function SearchBar(args) {
     }
 
     function sortOut(e) {
+        scrollDisable();
+        dispatch(toggleLoading(true));
         sortCriteria = e.target.value;
         dispatch(setSortCriteria(sortCriteria));
         Search(e, before, after, lastSearch, firstCall, sortCriteria, dispatch, selectedSubreddit);

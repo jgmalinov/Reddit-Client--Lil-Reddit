@@ -211,3 +211,14 @@ export function scrollEnable() {
     document.body.classList.remove("stop-scrolling");
 };
 
+export function resetUI() {
+    const ids = ['memes', 'AskReddit', 'funny', 'gaming', 'news'];
+    for (let i = 0; i < ids.length; i++) {
+        const id = ids[i];
+        const subreddit = document.getElementById(id);
+        const animations = subreddit.getAnimations();
+        animations[0].cancel();
+    };
+    window.scrollTo(0, 0);
+}
+

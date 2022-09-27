@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setMembers, setSelected, setIndex, selectSubreddits, selectMembers, selectSelected, selectAnimationUnits } from "./suggestionsSlice";
 import {setLastSearch, setSortCriteria, selectAfter, selectBefore, selectFirstCall, selectLastSearch, selectSortCriteria } from '../SearchBar/SearchBarSlice';
-import { postCreator, Search, addLoading, scrollDisable } from "../Utilities/Utilities";
+import { postCreator, Search, addLoading, scrollDisable, resetUI } from "../Utilities/Utilities";
 import { toggleLoading } from "../Loading/loadingScreenSlice";
 import { data } from "../../Animations";
 
@@ -15,9 +15,7 @@ export default function Suggestions(args) {
     const animationUnits = useSelector(selectAnimationUnits);
 
 
-
     useEffect(() => {
-        console.log('hleb');
         async function getMembers () {
             for(let subreddit in subreddits) {
                 let url = subreddits[subreddit].baseURL;
@@ -33,13 +31,17 @@ export default function Suggestions(args) {
         };
 
         
-        const eventListeners = []
+        const eventListeners = [];
         
         for (let subreddit in data) {
             const domElement = document.getElementById(subreddit);
             const keyframes = new KeyframeEffect(
                 domElement,
-                [ {transform: `translate(${data[subreddit][1]}%)`}, {transform: "translate(571.4284%)"}, {transform: `translate(571.4284%, ${data[subreddit][1]}%)`} ],
+                
+                [ { transform: `translate(${data[subreddit[1]]}%)`, 'aspect-ratio': '1 / 1', width: '12vw'}, {transform: `translate(${data[subreddit][2]}%)`, 'aspect-ratio': '1 / 1', width: '12vw'}, {transform: `translate(${data[subreddit][4]}%, ${data[subreddit][5]}%)`, 'aspect-ratio': '1 / 1', width: '10vw'}],
+                /*
+                [ { transform: `translate(${data[subreddit[1]]}%)`, 'aspect-ratio': '1 / 1', width: '12vw'}, {transform: `translate(${data[subreddit][2]}%)`, 'aspect-ratio': '1 / 1', width: '12vw'}, {transform: `translate(${data[subreddit][4]}%, ${data[subreddit][3]}%)`, 'aspect-ratio': '1 / 1', width: '10vw'},  {transform: `translate(${data[subreddit][4]}%, ${data[subreddit][5]}%)`, 'aspect-ratio': '1 / 1', width: '10vw'}],
+                */
                 { duration: 300, fill: 'backwards', direction: 'reverse'}
             );
         
@@ -52,7 +54,7 @@ export default function Suggestions(args) {
             
             eventListeners.push(play);
         };
-
+        
         for (let i = 0; i < eventListeners.length; i++) {
             window.addEventListener('scroll', eventListeners[i])
         };
@@ -72,6 +74,7 @@ export default function Suggestions(args) {
         dispatch(setSortCriteria('hot'));
         let sortCriteria = 'hot';
         Search(e, args.before, args.after, '', args.firstCall, sortCriteria, dispatch, e.currentTarget.id);
+        resetUI();
     };
 
     function SubredditCreator() {
@@ -100,4 +103,6 @@ export default function Suggestions(args) {
             
             
 20 <= window.scrollY && window.scrollY <= 30
+Animation version 2
+[ { transform: `translate(${data[subreddit[1]]}%)`, 'aspect-ratio': '1 / 1', width: '12vw'}, {transform: `translate(${data[subreddit][2]}%)`, 'aspect-ratio': '1 / 1', width: '12vw'}, {transform: `translate(${data[subreddit][4]}%, ${data[subreddit][3]}%)`, 'aspect-ratio': '1 / 1', width: '10vw'},  {transform: `translate(${data[subreddit][4]}%, ${data[subreddit][5]}%)`, 'aspect-ratio': '1 / 1', width: '10vw'}]
 */

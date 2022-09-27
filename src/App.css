@@ -63,12 +63,6 @@ html {
   cursor: pointer;
 }
 
-#subreddits {
-  display: flex;
-  justify-content: space-evenly;
-  width: 100%;
-}
-
 img {
   max-width: 95%;
 }
@@ -86,7 +80,7 @@ img {
   border-radius: 6px;
   width: 65vw;
   box-shadow: 3px 3px 3px black;
-  margin: 50px 0px;
+  margin: 10px 0px;
   padding: 0px 10px 22.178px 10px;
   background-color: white;
 }
@@ -140,19 +134,31 @@ img {
   margin: 0px 6px 0px 4px;
 }
 
+#suggestions {
+  display: flex;
+  justify-content: center;
+}
+
+#subreddits {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+}
+
 .subreddit {
   position: fixed;
+  left: 50%;
+  transform: translate(-50%);
   border-radius: 50%;
   background-color: #33a8ff;
   color: white;
-  width: 10vw;
-  height: 10vw;
+  width: 12vw;
+  aspect-ratio: 1 / 1;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   margin: 50px 0px;
-  left: 16.42858vw;
 }
 
 .subreddit:hover {
@@ -172,19 +178,19 @@ img {
 }
 
 #AskReddit {
-  transform: translate(142.8571%);
+  transform: translate(-170%);
 }
 
 #memes {
-  transform: translate(285.7142%);
+  transform: translate(-290%);
 }
 
 #gaming {
-  transform: translate(428.5713%);
+  transform: translate(70%);
 }
 
 #news {
-  transform: translate(571.4284%);
+  transform: translate(190%);
 }
 
 .stop-scrolling {

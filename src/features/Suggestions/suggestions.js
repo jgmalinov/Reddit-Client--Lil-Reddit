@@ -58,7 +58,7 @@ export default function Suggestions(args) {
                 if (lastScrollY < currentScrollY && reversing === 'AtoB') {
                     animation.reverse()
                     eventListeners[indexOfEventListenerObj].reversing = 'BtoA';
-                } else if (lastScrollY > currentScrollY && reversing === 'BtoA' && currentScrollY <= 120) {
+                } else if (lastScrollY > currentScrollY && reversing === 'BtoA' && currentScrollY <= 80) {
                     animation.reverse();
                     eventListeners[indexOfEventListenerObj].reversing = 'AtoB';
                 }

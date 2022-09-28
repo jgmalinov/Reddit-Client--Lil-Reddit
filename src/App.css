@@ -75,6 +75,17 @@ img {
   flex-direction: column;
 }
 
+.iFrame {
+  width: 65vw;
+  border-radius: 6px;
+  box-shadow: 3px 3px 3px black;
+  background-color: white;
+  margin: 10px 0px;
+  padding: 0px 10px 22.178px 10px;
+  display: flex;
+  justify-content: center;
+}
+
 .post {
   display: grid;
   border-radius: 6px;

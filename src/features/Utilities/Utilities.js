@@ -155,7 +155,9 @@ function iFrameEmbedder(post) {
     const subreddit = post.subreddit;
     const id = post.id;
     return (
-        <iframe id="reddit-embed" title="Embedded reddit posts" src={`https://www.redditmedia.com/r/${subreddit}/comments/${id}/${title}/?ref_source=embed&amp;ref=share&amp;embed=true`} sandbox="allow-scripts allow-same-origin allow-popups" style={{border: 'none'}} height="300" width="640" scrolling="yes"></iframe>
+        <div className="iFrame">
+            <iframe id="reddit-embed" title="Embedded reddit posts" src={`https://www.redditmedia.com/r/${subreddit}/comments/${id}/${title}/?ref_source=embed&amp;ref=share&amp;embed=true`} sandbox="allow-scripts allow-same-origin allow-popups" style={{border: 'none'}} height="500" width="95%" scrolling="no"></iframe>
+        </div>
     )
 
 }

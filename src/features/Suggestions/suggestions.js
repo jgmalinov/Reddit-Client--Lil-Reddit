@@ -53,27 +53,14 @@ export default function Suggestions(args) {
                 const indexOfEventListenerObj = eventListeners.indexOf(eventListenerObj);
                 const reversing = eventListenerObj.reversing;
                 const lastScrollY = eventListeners[indexOfEventListenerObj].lastScrollY;
-                
-                if (( window.scrollY <= 120 && animation.playState !== 'running' && reversing)) {
-                    animation.reverse();
-                    eventListeners[indexOfEventListenerObj].reversing = false;
-                } else if (window.scrollY > 120 && (animation.playState === 'idle' || animation.playState === 'finished') && lastScrollY < window.scrollY && lastScrollY <= 120) {
-                    animation.reverse();
-                    eventListeners[indexOfEventListenerObj].reversing = false;
-                } else if (( window.scrollY <= 120 && animation.playState === 'running' && !reversing && lastScrollY > window.scrollY)) {
-                    eventListeners[indexOfEventListenerObj].reversing = true;
-                    animation.pause();
-                    animation.reverse();
-                    
-                } else if (( window.scrollY <= 120 && animation.playState === 'finished' && !reversing && lastScrollY > window.scrollY)) {
-                    eventListeners[indexOfEventListenerObj].reversing = true;
-                    animation.pause();
-                    animation.reverse();
-                    
-                } else if (( window.scrollY <= 120 && animation.playState === 'running' && reversing && lastScrollY < window.scrollY)) {
-                    animation.pause();
+                const currentScrollY = window.scrollY;
+
+                if (lastScrollY < currentScrollY && reversing === 'AtoB') {
                     animation.reverse()
-                    eventListeners[indexOfEventListenerObj].reversing = false;
+                    eventListeners[indexOfEventListenerObj].reversing = 'BtoA';
+                } else if (lastScrollY > currentScrollY && reversing === 'BtoA' && currentScrollY <= 120) {
+                    animation.reverse();
+                    eventListeners[indexOfEventListenerObj].reversing = 'AtoB';
                 }
                 eventListeners[indexOfEventListenerObj].lastScrollY = window.scrollY;
             };
@@ -85,7 +72,7 @@ export default function Suggestions(args) {
                 }
             };
             
-            eventListeners.push({subreddit, animation, play, reverse, reversing: true, lastScrollY: 0});
+            eventListeners.push({subreddit, animation, play, reverse, reversing: 'AtoB', lastScrollY: 0});
         };
         
         for (let i = 0; i < eventListeners.length; i++) {

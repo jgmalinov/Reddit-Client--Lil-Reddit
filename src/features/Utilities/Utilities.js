@@ -55,9 +55,10 @@ export  function PostsConverter(args) {
     const dispatch = useDispatch();
 
     function switchCommentsExpanded(event) {
-        const id = event.target.id;
-        dispatch(expandComments({id: id}));
-    }
+        const postId = event.target.id;
+        const commentsSection = document.getElementById('commentsSection' + postId);
+        commentsSection.style.display === 'none' ? commentsSection.style.display = 'block' : commentsSection.style.display = 'none';  
+    };
     const iframePosts = [];
     const nonIframePosts = []; 
     for(let post in posts) {
@@ -76,15 +77,15 @@ export  function PostsConverter(args) {
                         </section>
                         <section className="statistics">
                             <div id="centerstats">
-                                <a id={currentPost.id} onClick={switchCommentsExpanded}>{posts[post].numComments} comments</a>
+                                <a id={currentPost.id} className={'commentsButton'} onClick={switchCommentsExpanded}>{posts[post].numComments} comments</a>
                                 <div className="thumbs">
                                 <a>{posts[post].ups}<i className="fa-regular fa-thumbs-up"></i></a>
                                 <a>{posts[post].downs}<i className="fa-regular fa-thumbs-down"></i></a>
                                 </div>
                             </div>
                         </section>
-                        <section className="comments">
-                            {currentPost.commentsExpanded ? commentsExpander(currentPost) : <h3></h3>}
+                        <section className="commentsSection" id={`commentsSection${currentPost.id}`}>
+                            {commentsExpander(currentPost)}
                         </section>
                         
                     </div>

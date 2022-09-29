@@ -17,6 +17,7 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0.95;
 }
 
 #logo {
@@ -34,10 +35,46 @@ html {
   width: 100%;
 }
 
+#browse {
+  margin-top: 20vw;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+#navButtons {
+  width: 67vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+#rising, #top, #new, #hot, #relevance, #comments{
+  margin-right: 12px;
+}
+
+#next {
+  margin-left: 12px;
+}
+
+.button {
+  width: 85px;
+  height: 25px;
+  background-color: white;
+  border-radius: 6px 6px 0px 0px;
+  border-style: solid solid solid;
+  border-color: white;
+  border-width: 0.5px 0.5px 0px 0.5px;
+  text-align: center;
+  box-shadow: 2.3px 0px 0px 0px black;
+}
+
+
+
 #searchbar {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  margin-bottom: 50px;
 }
 
 #searchbar input {
@@ -68,7 +105,6 @@ img {
 }
 
 #main {
-  margin-top: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,22 +113,22 @@ img {
 
 .iFrame {
   width: 65vw;
-  border-radius: 6px;
-  box-shadow: 3px 3px 3px black;
+  border-radius: 0px 0px 6px 6px;
+  box-shadow: 2.3px 0px 0px black;
   background-color: white;
-  margin: 10px 0px;
-  padding: 0px 10px 22.178px 10px;
+  margin-bottom: 10px;
+  padding: 0px 1vw 22.178px 1vw;
   display: flex;
   justify-content: center;
 }
 
 .post {
   display: grid;
-  border-radius: 6px;
+  border-radius: 0px 0px 6px 6px;
   width: 65vw;
-  box-shadow: 3px 3px 3px black;
-  margin: 10px 0px;
-  padding: 0px 10px 22.178px 10px;
+  box-shadow: 2.3px 0px 0px black;
+  margin-bottom: 10px;
+  padding: 0px 1vw 22.178px 1vw;
   background-color: white;
 }
 

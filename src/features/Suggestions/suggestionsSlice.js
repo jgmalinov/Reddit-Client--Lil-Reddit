@@ -39,10 +39,6 @@ const suggestionsSlice = createSlice({
             comments: 'comments'
         },
         selected: '',
-        animationUnits: {
-            index: 0,
-            units: [0, 142.8571, 285.7142, 428.5713, 571.4284]
-        }
     },
     reducers: {
         setMembers: (state, action) => {

@@ -15,14 +15,14 @@ export default function LoadingScreen(args) {
             setTimeout(() => {
                 dispatch(toggleLoading(false));
                 scrollEnable();
-            }, 3000);
+            }, 2000);
         };
 
         const domElement = document.getElementById("logo");
         const keyframes = new KeyframeEffect(
             domElement,
             [{transform: 'rotate(0deg)'}, {transform: 'rotate(360deg)'}],
-            {duration: 1000, direction: 'alternate', iterations: 3, easing: 'ease-in-out'}
+            {duration: 500, direction: 'alternate', iterations: 4, easing: 'ease-in-out'}
         );
         const animation = new Animation(keyframes, document.timeline);
         animation.play();

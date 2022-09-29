@@ -20,7 +20,7 @@ export default function SearchBar(args) {
     const sortButtons = ['hot', 'comments', 'relevance', 'top', 'new', 'rising' ];
     for (let i=0; i < sortButtons.length; i++) {
         const sortType = sortButtons[i]; 
-        const buttonStyle = sortCriteria === sortType ? {'box-shadow': 'black 4px 3px 1.5px 0.2px', position: 'relative', right: '3px', bottom: '3px'} : {};
+        const buttonStyle = sortCriteria === sortType ? {'boxShadow': 'black 4px 3px 1.5px 0.2px', position: 'relative', right: '3px', bottom: '3px'} : {};
         sortButtonStyles[sortType] = buttonStyle;
     }
 

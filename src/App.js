@@ -6,7 +6,9 @@ import LoadingScreen from './features/Loading/loadingScreen';
 import { useEffect } from 'react';
 import './App.css';
 import { loadingScreenRemover } from './features/Utilities/Utilities';
+import {animationCreator} from './Animations';
 
+window.onload = animationCreator;
 /*
 <Route path='/Login' element={<Login />}></Route>
 <Route path='/About' element={<About />}></Route>

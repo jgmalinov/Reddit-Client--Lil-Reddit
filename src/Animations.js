@@ -16,3 +16,50 @@ export const data = {
     gaming: ["r/gaming", 70, translateX, translateY * 1, translateXSmaller, translateY * 1 + verticalAdjustment],
     memes: ["r/memes", -290, translateX, translateY * 0, translateXSmaller, translateY * 0 + verticalAdjustment]
 };
+
+const eventListeners = [];
+export function animationCreator() {
+    for (let subreddit in data) {
+        console.log('hleb');
+        const domElement = document.getElementById(subreddit);
+        const keyframes = new KeyframeEffect(
+            domElement,
+            [ { transform: `translate(${data[subreddit[1]]}%)`, 'aspect-ratio': '1 / 1', width: '12vw'}, {transform: `translate(${data[subreddit][2]}%)`, 'aspect-ratio': '1 / 1', width: '12vw'}, {transform: `translate(${data[subreddit][4]}%, ${data[subreddit][5]}%)`, 'aspect-ratio': '1 / 1', width: '9.1vw'}],
+            { duration: 200, fill: 'backwards', direction: 'reverse'}
+        );
+    
+        const animation = new Animation(keyframes, document.timeline);
+        animation.id = subreddit;
+
+        function play(e) {
+            const eventListenerObj = eventListeners.find((element) => element.subreddit === animation.id);
+            const indexOfEventListenerObj = eventListeners.indexOf(eventListenerObj);
+            const reversing = eventListenerObj.reversing;
+            const lastScrollY = eventListeners[indexOfEventListenerObj].lastScrollY;
+            const currentScrollY = window.scrollY;
+
+            if (lastScrollY < currentScrollY && reversing === 'AtoB') {
+                animation.reverse()
+                eventListeners[indexOfEventListenerObj].reversing = 'BtoA';
+            } else if (lastScrollY > currentScrollY && reversing === 'BtoA' && currentScrollY <= 80) {
+                animation.reverse();
+                eventListeners[indexOfEventListenerObj].reversing = 'AtoB';
+            }
+            eventListeners[indexOfEventListenerObj].lastScrollY = window.scrollY;
+        };
+
+        function reverse(e) {
+            if (0 <= window.scrollY && window.scrollY <= 10 && animation.playState !== 'running') {
+                animation.reverse();
+                animation.pause();   
+            }
+        };
+        
+        eventListeners.push({subreddit, animation, play, reverse, reversing: 'AtoB', lastScrollY: 0});
+    };
+    
+    for (let i = 0; i < eventListeners.length; i++) {
+        window.addEventListener('scroll', eventListeners[i].play);
+        
+    };
+};

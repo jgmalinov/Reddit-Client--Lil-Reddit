@@ -62,4 +62,17 @@ export function animationCreator() {
         window.addEventListener('scroll', eventListeners[i].play);
         
     };
+
+    const littleLogo = document.getElementById('littleLogo');
+    const inputBar = document.getElementById('inputBar');
+    const keyframes = new KeyframeEffect(
+        littleLogo,
+        [{position: 'relative', bottom: '0px'}, {position: 'relative', bottom: '8px'}, {position: 'relative', bottom: '0px'}],
+        {duration: 130, easing: 'ease-in'}
+    )
+    const littleLogoAnimation = new Animation(keyframes, document.timeline);
+    const playLittleLogoAnimation = (e) => {
+        littleLogoAnimation.play();
+    }
+    inputBar.addEventListener('keypress', playLittleLogoAnimation);
 };

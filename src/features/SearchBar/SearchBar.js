@@ -59,7 +59,7 @@ export default function SearchBar(args) {
                     </div>
         } else {
             return <div name='sort' id='sort'>
-                        <button className='button' id='rising' value='rising' onClick={sortOut}>Rising</button>
+                        <button className='button' id='rising' value='rising' style={sortButtonStyles.rising} onClick={sortOut}>Rising</button>
                         <button className='button' id='hot' value='hot' style={sortButtonStyles.hot} onClick={sortOut}>Hot</button>
                         <button className='button' id='top' value='top' style={sortButtonStyles.top} onClick={sortOut}>Top</button>
                         <button className='button' id='new' value='new' style={sortButtonStyles.new} onClick={sortOut}>New</button>
@@ -76,9 +76,8 @@ export default function SearchBar(args) {
             </div>
             <div id='browse'>
                 <form id='searchbar' onSubmit={SearchWrapper}>
-                    <input type='text' placeholder='Search'></input>
-                    <button><i className="fa-brands fa-searchengin"></i></button>
-                    <label>Sort</label>
+                    <input type='text' placeholder='Search' id='inputBar'></input>
+                    <button><i className="fa-brands fa-reddit" id="littleLogo"></i></button>
                 </form>
                 <div id='navButtons' style={navButtonsView}>
                     {sortType()}

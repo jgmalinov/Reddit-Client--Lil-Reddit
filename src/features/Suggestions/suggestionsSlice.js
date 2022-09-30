@@ -38,7 +38,7 @@ const suggestionsSlice = createSlice({
             new: 'new',
             comments: 'comments'
         },
-        selected: '',
+        selected: 'funny',
     },
     reducers: {
         setMembers: (state, action) => {

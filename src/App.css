@@ -110,7 +110,7 @@ html {
 }
 
 img {
-  width: 70%;
+  width: 50%;
 }
 
 #main {
@@ -222,7 +222,9 @@ img {
   left: 50%;
   transform: translate(-50%);
   border-radius: 50%;
-  background-color: #33a8ff;
+  background-color: #5cb8ff;
+  border: 1px solid black;
+  box-shadow: 2.3px 0px 2px black;
   color: white;
   width: 12vw;
   aspect-ratio: 1 / 1;

@@ -29,6 +29,16 @@ export default function Suggestions(args) {
         if (!subreddits.AskReddit.members) {
             getMembers();
         };
+        const subredditKeys = Object.keys(subreddits);
+        for (let i=0; i < subredditKeys.length; i++) {
+            const subreddit = document.getElementById(subredditKeys[i]);
+            if (selectedSubreddit === subreddit.id) {
+                subreddit.style.backgroundColor = '#ff4500';
+            } else {
+                subreddit.style.backgroundColor = '#5cb8ff'
+            }
+            
+        };
 
         
         
@@ -53,7 +63,7 @@ export default function Suggestions(args) {
         }
 
         return subredditsArray;
-    }
+    };
 
     return (
         <div id="subreddits">

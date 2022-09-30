@@ -110,7 +110,7 @@ html {
 }
 
 img {
-  max-width: 95%;
+  width: 70%;
 }
 
 #main {
@@ -161,12 +161,22 @@ img {
   justify-content: center;
 }
 
-.statistics {
-  display: flex;
-  justify-content: center;
+.statisticsOverview {
   width: 95%;
   justify-self: center;
-  margin-top: 15px;
+  margin: 18.72px 0px;
+  color: #787c7e;
+  font-size: smaller;
+}
+
+.statistics {
+  display: flex;
+  justify-content: flex-start;
+  justify-self: center;
+}
+
+#numReplies {
+  margin-right: 10px;
 }
 
 
@@ -176,6 +186,11 @@ img {
   justify-content: space-between;
 }
 
+
+.fa-sharp.fa-solid.fa-arrow-turn-up {
+  transform: scaleX(-1);
+  margin-right: 10px;
+}
 
 
 .fa-regular.fa-thumbs-down {
@@ -256,9 +271,20 @@ img {
 }
 
 .commentsSection {
-  display: none;
+  width: 95%;
+  justify-self: center;
 }
 
 .commentsButton {
   cursor: pointer;
+}
+
+.commentsButton:hover {
+  text-decoration: underline;
+}
+
+.comment p {
+  font-weight: 600;
+  color: #787c7e;
+  font-size: small;
 }

@@ -24,7 +24,13 @@ export default function SearchBar(args) {
         sortButtonStyles[sortType] = buttonStyle;
     }
 
-
+    if (Object.keys(posts).length === 0) {
+        scrollDisable();
+        dispatch(toggleLoading(true));
+        dispatch(setSelected('funny'));
+        dispatch(setLastSearch(''));
+        Search(undefined, before, after, lastSearch, firstCall, sortCriteria, dispatch, selectedSubreddit)
+    }
 
     function SearchWrapper(e) {
         scrollDisable();

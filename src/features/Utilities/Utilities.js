@@ -6,7 +6,14 @@ import { selectSelected } from "../Suggestions/suggestionsSlice";
 
 
 export async function Search(e, before, after, lastSearch, firstCall, sortCriteria, dispatch, selectedSubreddit='') {
-    e.preventDefault();
+    let currentTarget;
+    if (e) {
+        e.preventDefault();
+        currentTarget = e.currentTarget
+    } else {
+        currentTarget = document.getElementById('funny');
+    }
+
     let response;
     let scenario;
     const baseURL = `https://www.reddit.com/`;
@@ -15,27 +22,21 @@ export async function Search(e, before, after, lastSearch, firstCall, sortCriter
     const config = {headers: {'Cookie': 'SameSite=None; Secure' }}
     
 
-    switch (e.currentTarget) {
-        case document.getElementById('searchbar'):
+    if (currentTarget === document.getElementById('searchbar')) {
             scenario = 'newSearch';
             response = await fetch(baseURL + searchQuery + `&limit=20`, config);
-            break;
-        case document.getElementById('next'):
-            scenario = 'next';
-            response = await fetch(baseURL + (selectedSubreddit ? (subredditQuery + `?after=${after}&limit=20`): (searchQuery + `&after=${after}&limit=20`)), config);
-            break;
-        case document.getElementById('previous'):
-            scenario = 'previous';
-            response = await fetch(baseURL + (selectedSubreddit ? (subredditQuery + `?before=${before}&limit=20`): (searchQuery + `&before=${before}&limit=20`)), config);
-            break;
-        case document.getElementById('sort'):
-            scenario = 'newSearch';
-            response = await fetch(baseURL + (selectedSubreddit ? (subredditQuery + `?limit=20`) : (searchQuery + `&limit=20`)), config);
-            break;
-        default:
-            scenario = 'newSearch';
-            response = await fetch(baseURL + subredditQuery, config);
-            break;
+    } else if (currentTarget === document.getElementById('next')) {
+        scenario = 'next';
+        response = await fetch(baseURL + (selectedSubreddit ? (subredditQuery + `?after=${after}&limit=20`): (searchQuery + `&after=${after}&limit=20`)), config);
+    } else if (currentTarget === document.getElementById('previous')) {
+        scenario = 'previous';
+        response = await fetch(baseURL + (selectedSubreddit ? (subredditQuery + `?before=${before}&limit=20`): (searchQuery + `&before=${before}&limit=20`)), config);
+    } else if (['new', 'top', 'relevance', 'comments', 'rising', 'hot'].includes(currentTarget.id)) {
+        scenario = 'newSearch';
+        response = await fetch(baseURL + (selectedSubreddit ? (subredditQuery + `?limit=20`) : (searchQuery + `&limit=20`)), config);
+    } else {
+        scenario = 'newSearch';
+        response = await fetch(baseURL + subredditQuery, config);
     };
     
     const resultsJson = await response.json();
@@ -75,7 +76,7 @@ export  function PostsConverter(args) {
                         <section className="visual-content">
                             {<img src={currentPost.url} alt='content visualization'></img>}
                         </section>
-                        <section className="statistics">
+                        <section className="statisticsOverview">
                             <div id="centerstats">
                                 <a id={currentPost.id} className={'commentsButton'} onClick={switchCommentsExpanded}>{posts[post].numComments} comments</a>
                                 <div className="thumbs">
@@ -84,7 +85,7 @@ export  function PostsConverter(args) {
                                 </div>
                             </div>
                         </section>
-                        <section className="commentsSection" id={`commentsSection${currentPost.id}`}>
+                        <section className="commentsSection" id={`commentsSection${currentPost.id}`} style={{display: 'none'}}>
                             {commentsExpander(currentPost)}
                         </section>
                         
@@ -190,11 +191,12 @@ function commentsExpander(post) {
     for (let comment in comments) {
         const jsxComment = (
             <div className="comment">
-                <span>{comments[comment].author} {dateConverter(comments[comment].created)}</span>
+                <p>{comments[comment].author} {dateConverter(comments[comment].created)}</p>
                 <div className="commentBody">{comments[comment].body}</div>
                 <section className="statistics">
-                    {comments[comment].replies ? <a>{comments[comment].replies.data.children.length} replies</a> : <p>0 replies</p>}
-                    {comments[comment].score >= 0 ? <a>{comments[comment].score}<i className="fa-regular fa-thumbs-up"></i></a> : <a>{comments[comment].score}<i className="fa-regular fa-thumbs-down"></i></a>} 
+                    {<p><i className="fa-sharp fa-solid fa-arrow-turn-up"></i></p>}
+                    {comments[comment].replies ? <p id="numReplies">{comments[comment].replies.data.children.length} replies</p> : <p id="numReplies">0 replies</p>}
+                    {comments[comment].score >= 0 ? <p>{comments[comment].score}<i className="fa-regular fa-thumbs-up"></i></p> : <a>{comments[comment].score}<i className="fa-regular fa-thumbs-down"></i></a>} 
                 </section>
             </div>
         )

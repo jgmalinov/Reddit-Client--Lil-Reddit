@@ -7,6 +7,9 @@ import { toggleLoading } from "../Loading/loadingScreenSlice";
 
 export function Main(args) {
     const posts = useSelector(postSelector);
+    if (!posts) {
+        
+    }
     const dispatch = useDispatch();
 
     return (

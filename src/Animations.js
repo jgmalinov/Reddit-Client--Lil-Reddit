@@ -1,9 +1,8 @@
 const fromMiddleToDestinationVW = 41.25;
 const offsetToCenter = -50;
 const shadowAdjustment = 1.5;
-const verticalAdjustment = -6;
-let vw = 12;
-let vwSmaller = 9.1;
+const verticalAdjustment = -28;
+let vwSmaller = 9.5;
 let translateX = 294.75;
 let translateXSmaller = fromMiddleToDestinationVW / vwSmaller * 100 + offsetToCenter + shadowAdjustment;
 let translateY = 110;
@@ -20,11 +19,10 @@ export const data = {
 const eventListeners = [];
 export function animationCreator() {
     for (let subreddit in data) {
-        console.log('hleb');
         const domElement = document.getElementById(subreddit);
         const keyframes = new KeyframeEffect(
             domElement,
-            [ { transform: `translate(${data[subreddit[1]]}%)`, 'aspect-ratio': '1 / 1', width: '12vw'}, {transform: `translate(${data[subreddit][2]}%)`, 'aspect-ratio': '1 / 1', width: '12vw'}, {transform: `translate(${data[subreddit][4]}%, ${data[subreddit][5]}%)`, 'aspect-ratio': '1 / 1', width: '9.1vw'}],
+            [ { transform: `translate(${data[subreddit[1]]}%)`, 'aspect-ratio': '1 / 1', width: '12vw'}, {transform: `translate(${data[subreddit][2]}%)`, 'aspect-ratio': '1 / 1', width: '12vw'}, {transform: `translate(${data[subreddit][4]}%, ${data[subreddit][5]}%)`, 'aspect-ratio': '1 / 1', width: '9.5vw'}],
             { duration: 200, fill: 'backwards', direction: 'reverse'}
         );
     

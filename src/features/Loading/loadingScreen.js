@@ -1,4 +1,4 @@
-import { loadingSelector, loadingStyleSelector, toggleLoading } from "./loadingScreenSlice";
+import { loadingSelector, loadingStyleSelector, toggleLoading, initialSelector, toggleInitial } from "./loadingScreenSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { scrollEnable } from "../Utilities/Utilities";
@@ -6,25 +6,39 @@ import { scrollEnable } from "../Utilities/Utilities";
 export default function LoadingScreen(args) {
     const dispatch = useDispatch();
     const loading = useSelector(loadingSelector);
+    const initial = useSelector(initialSelector);
     const style = useSelector(loadingStyleSelector);
     
 
 
     useEffect(() => {
-        if(loading) {
+        let keyframes, animation, iterations;
+        const domElement = document.getElementById("logo");
+
+        if(loading && initial) {
+            setTimeout(() => {
+                dispatch(toggleLoading(false));
+                dispatch(toggleInitial(false));
+                scrollEnable();
+            }, 8000);
+
+            iterations = 16;
+
+        } else if (loading && !initial) {
             setTimeout(() => {
                 dispatch(toggleLoading(false));
                 scrollEnable();
             }, 1000);
-        };
 
-        const domElement = document.getElementById("logo");
-        const keyframes = new KeyframeEffect(
+            iterations = 2;
+        };
+ 
+        keyframes = new KeyframeEffect(
             domElement,
             [{transform: 'rotate(0deg)'}, {transform: 'rotate(360deg)'}],
-            {duration: 500, direction: 'alternate', iterations: 2, easing: 'ease-in-out'}
+            {duration: 500, direction: 'alternate', iterations: iterations, easing: 'ease-in-out'}
         );
-        const animation = new Animation(keyframes, document.timeline);
+        animation = new Animation(keyframes, document.timeline);
         animation.play();
         
     });

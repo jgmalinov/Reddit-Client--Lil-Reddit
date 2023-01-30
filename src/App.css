@@ -86,8 +86,8 @@ html {
 #searchbar {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
-  margin-bottom: 70px;
+  align-items: center;
+  height: 150px;
 }
 
 #searchbar input {
@@ -111,6 +111,12 @@ html {
 
 img {
   width: 50%;
+}
+
+#mainSection {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
 }
 
 #main {
@@ -232,7 +238,8 @@ img {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin: 50px 0px;
+  margin: 50px 0px 0px 0px;
+  transition: 0.3s;
 }
 
 .subreddit:hover {
@@ -289,4 +296,41 @@ img {
   font-weight: 600;
   color: #787c7e;
   font-size: small;
+}
+
+
+@media only screen and (max-width: 1350px) {
+  .subreddit h3, .subreddit h5 {
+    font-size: 1.2vw;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .subreddit {
+    border-radius: 0%;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .button {
+    font-size: 1.4vw;
+    width: 60px;
+  };
+
+  .subreddit {
+    margin-bottom: 50px;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .button {
+    width: 55px;
+  };
+}
+
+@media only screen and (max-width: 600px) {
+  .button {
+    font-size: 1.6vw;
+    width: 45px;
+  };
 }

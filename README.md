@@ -21,8 +21,8 @@ The data retrieved is partitioned in 20 post per page, and the user has the abil
 
 # In-app images
 ![Dashboard1](./public/Exhibition1.png)
-![Dashboard2 Subreddits to side](./public/Exhibition1.png)
-![Dashboard3 Smaller screen, expanded comments](./public/Exhibition1.png)
+![Dashboard2 Subreddits to side](./public/Exhibition2.png)
+![Dashboard3 Smaller screen, expanded comments](./public/Exhibition3.png)
 
 *** 
 
